@@ -1,0 +1,58 @@
+<!--<style>
+  
+
+  .section {
+    flex: 1; /* Chaque section prend autant d'espace que possible */
+    border: 1px solid #ddd; /* Ajoute une bordure pour visualiser les sections */
+    box-sizing: border-box; /* Garantit que la bordure est incluse dans la taille totale de la section */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+ 
+
+
+<div >
+  <label for="selectedGender">Select gender:</label>
+  <select id="selectedGender" >
+    <option value="1">male</option>
+    <option value="2">femele</option>
+  </select>
+  <button (click)="filter()">Filtrer</button>
+  <div class="section">
+
+  <canvas id="myChart" width="100" height="50"></canvas>
+</div>
+</div>
+
+-->
+
+
+<style>
+  
+
+  .section {
+    flex: 1; 
+    border: 1px solid #ddd; 
+    box-sizing: border-box; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+
+<div>
+  <label for="selectedGender">Select gender:</label>
+  <select id="selectedGender" [(ngModel)]="selectedGender" (change)="filter()">
+    <option value="1">male</option>
+    <option value="2">female</option>
+  </select>
+  <button (click)="filter()">Filter</button>
+  <div class="section">
+    <canvas id="myChart1" width="400" height="200"></canvas>
+  </div>
+</div>
+
+
+

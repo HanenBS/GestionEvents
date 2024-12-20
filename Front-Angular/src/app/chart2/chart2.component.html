@@ -1,0 +1,30 @@
+<style>
+  
+
+  .section {
+    flex: 1; /* Chaque section prend autant d'espace que possible */
+    border: 1px solid #ddd; /* Ajoute une bordure pour visualiser les sections */
+    box-sizing: border-box; /* Garantit que la bordure est incluse dans la taille totale de la section */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+
+<div >
+  <label for="selectedAge">Select Age:</label>
+  <select id="selectedAge" >
+    <option value="1">16-24</option>
+    <option value="2">25-34</option>
+    <option value="3">35-44</option>
+    <option value="4">45-54</option>
+    <option value="5">55-64</option>
+    <option value="6">65-74</option>
+    <option value="6">+75</option>
+  </select>
+  <button (click)="filter()">Filtrer</button>
+  <div class="section">
+
+  <canvas id="myChart2" width="100" height="10"></canvas>
+</div>
+</div>
