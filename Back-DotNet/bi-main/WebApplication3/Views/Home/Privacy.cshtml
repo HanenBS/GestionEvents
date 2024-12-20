@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts {
+    <script>
+ 
+
+
+        fetch('https://localhost:7185/api/CubeData/query2')
+            .then(response => response.json())
+            .then(data => {
+                // Process data and render Chart.js line chart
+                renderLineChart(data);
+            });
+          
+
+        // Move renderLineChart to the global level
+        function renderLineChart(data) {
+            console.log("Received data:", data); // Log the received data to the console
+
+            var labels = data.data.map(item => item.AgeId);
+            var sentValues = data.data.map(item => item['[Measures].[Nb Sent]']);
+            var dispatchedValues = data.data.map(item => item['[Measures].[Nb Dispatched]']);
+            var delivValues = data.data.map(item => item['[Measures].[Nb Deliv]']);
+
+            console.log("Labels:", labels); // Log the labels to the console
+            console.log("Sent Values:", sentValues); // Log the sent values to the console
+            console.log("Dispatched Values:", dispatchedValues); // Log the dispatched values to the console
+            console.log("Delivered Values:", delivValues); // Log the delivered values to the console
+
+            var ctx = document.getElementById('myLineChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Sent',
+                            data: sentValues,
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 2,
+                            fill: false
+                        },
+                        {
+                            label: 'Dispatched',
+                            data: dispatchedValues,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 2,
+                            fill: false
+                        },
+                        {
+                            label: 'Delivered',
+                            data: delivValues,
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 2,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'category',
+                            labels: labels
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+    </script>
+}
+
+<h1>LineChart</h1>
+
+<div>
+    <canvas id="myLineChart" width="400" height="400"></canvas>
+</div>

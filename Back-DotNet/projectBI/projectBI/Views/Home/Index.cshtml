@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Votre titre</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Graphique de type Courbe</h1>
+    <canvas id="myChart" width="400" height="200"></canvas>
+    <script>
+        var years = @Html.Raw(Json.Serialize(Model.Years));
+        var nbSentValues = @Html.Raw(Json.Serialize(Model.NbSentValues));
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line', // Changer le type de graphique en 'line' pour un graphique de type courbe
+            data: {
+                labels: years,
+                datasets: [{
+                    label: 'Nb Sent',
+                    data: nbSentValues,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1,
+                    fill: false // Assurer que le graphique ne soit pas rempli
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

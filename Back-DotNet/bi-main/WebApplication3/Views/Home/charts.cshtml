@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charts</title>
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <script>
+        var selectedGender = 0; // default gender value
+
+        // Function to load chart based on selected gender
+        function loadChart() {
+            var apiUrl = 'https://localhost:7185/api/CubeData/query2?gender=' + selectedGender;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // For simplicity, just log the data to the console
+                    console.log(data);
+
+                    // Enable pagination button after the chart is loaded
+                    document.getElementById('paginationButton').disabled = false;
+                })
+                .catch(error => {
+                    console.error('Error loading chart:', error);
+                    // Handle error and show an appropriate message
+                });
+        }
+
+        // Function to handle dropdown change
+        function renderChart(data) {
+            var labels = data.Data.map(item => item['[Campaigns].[Prj Mkg ID].[Prj Mkg ID]']);
+            var sentValues = data.Data.map(item => item['[Measures].[Nb Sent]']);
+            var dispatchedValues = data.Data.map(item => item['[Measures].[Nb Dispatched]']);
+            var delivValues = data.Data.map(item => item['[Measures].[Nb Deliv]']);
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Sent',
+                            data: sentValues,
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        },
+                        {
+                            label: 'Dispatched',
+                            data: dispatchedValues,
+                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        },
+                        {
+                            label: 'Delivered',
+                            data: delivValues,
+                            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+
+        // Initial chart load
+        loadChart();
+
+        // Function to load second chart (you need to implement this)
+        function loadSecondChart() {
+            // Implement this function based on your requirements
+        }
+    </script>
+
+    <label for="selectedGender">Select gender:</label>
+    <select id="selectedGender" onchange="onGenderChange()">
+        <option value="0">All Genders</option>
+        <option value="1">Male</option>
+        <option value="2">Female</option>
+    </select>
+
+    <!-- A button to trigger the second chart (you can implement this function) -->
+    <button id="paginationButton" onclick="loadSecondChart()" disabled>Second Chart</button>
+
+</body>
+</html>
